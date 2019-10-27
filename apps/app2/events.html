@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <button v-on:click="clicked(2)">Click!</button>
+            <p>{{ click }}</p>
+            <p v-on:mousemove="updateCoordinates">
+                Coordinates: {{ x }} / {{ y }} - 
+                <span v-on:mousemove.stop>DEAD SPOT</span>
+            </p>
+        </div>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    click: 0,
+                    x: 0,
+                    y: 0
+                },
+                methods: {
+                    clicked: function (step) {
+                        this.click += step
+                    },
+                    updateCoordinates: function (event){
+                        this.x = event.clientX;
+                        this.y = event.clientY;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
