@@ -30,6 +30,12 @@
 .size {
   font-size: 20px;
 }
+.progress-bar {
+  width: 200px;
+  height: 20px;
+  border: 1px solid black;
+}
+
   </style>
 </head>
 
@@ -60,8 +66,8 @@
     </div>
     <!-- 6) Create a simple progress bar with setInterval and style bindings. Start it by hitting the below button. -->
     <div>
-      <button>Start Progress</button>
-      <div></div>
+      <button @click="startProgress">Start Progress</button>
+      <div :class="['progress-bar']" :style="progressBar"></div>
     </div>
   </div>
 
@@ -79,11 +85,18 @@
         fontSize: '50px',
         userStyle: {
           backgroundColor: 'gray'
-        }
+        },
+        progressBar: {
+          width: "0px",
+          backgroundColor: "green",
+        },
       },
       computed: {
         userClass(value) {
             console.log('TEST')
+        },
+        progressBar() {
+
         }
       },
       methods: {
@@ -94,8 +107,17 @@
             this.effectClasses.highlight = !this.effectClasses.highlight
           }, 1000)
         },
-      }
-    })
+        startProgress() {
+          const vm = this
+          let width = 0;
+
+          setInterval(() => {
+            width += 10
+            vm.progressBar.width = width + 'px'
+          }, 500)
+        },
+      },
+      })
   </script>
 </body>
 
