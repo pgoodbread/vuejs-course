@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.js"></script>
+    <style>
+        #app {
+            font-family: Helvetica, sans-serif;
+        }
+
+        .life {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .status {
+            margin: auto;
+            background-color: grey;
+        }
+
+        .bar-outer {
+            width: 400px;
+            height: 40px;
+            background-color: lightgrey;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 40px;
+        }
+
+        .bar-inner {
+            height: 40px;
+            background-color: rgb(53, 165, 53);
+            display:flex;
+            justify-content: center;
+        }
+
+        .bar-player {
+            width: 100px;
+        }
+
+        .bar-monster {
+            width: 200px;
+        }
+
+        .number {
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 40px;
+        }
+
+        .buttons {
+            margin: 20px auto;
+            padding: 30px 10px;
+            display: flex;
+            justify-content: space-evenly;
+            box-shadow: 1px 1px 5px grey;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 30px;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 1px 1px 3px darkgray;
+            user-select: none;
+            margin: 0px 5px;
+        }
+
+        .button:focus {
+            outline: none;
+        }
+
+        .history {
+            padding: 15px 40px;
+            box-shadow: 1px 1px 5px grey;
+        }
+
+        .history-item {
+            font-size: 25px;
+            font-weight: bolder;
+            padding: 10px 20px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .player{
+            background-color: rgba(255, 0, 0, 0.3);
+            color: red;
+        }
+
+        .monster  {
+            background-color: rgba(0, 0, 255, 0.3);
+            color: blue;
+        }
+
+        .red {
+            background-color: rgba(255, 0, 0, 0.5);
+        }
+
+        .green {
+            background-color: rgba(73, 179, 20, 0.8);
+        }
+
+        .lightgreen {
+            background-color: rgba(111, 255, 0, 0.5);
+        }
+
+        .orange {
+            background-color: rgba(255, 167, 79, 0.5);
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <section class="life">
+            <!-- Your -->
+            <div class="status">
+                <h2>Test</h2>
+                <div class="bar-outer">
+                    <div class="bar-inner bar-player">
+                        <span class="number">{{ player.life }}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Monster -->
+            <div class="status">
+                <h2>Component</h2>
+                <div class="bar-outer">
+                    <div class="bar-inner bar-monster">
+                        <span class="number">{{ monster.life }}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Buttons -->
+        <section class="buttons">
+            <div class="start" v-if="!started" @click="start">
+                <button class="button green">
+                    Start
+                </button>
+            </div>
+            <div class="game" v-else>
+                <button class="button red">
+                    Attack
+                </button>
+                <button class="button orange">
+                    Special Attack
+                </button>
+                <button class="button lightgreen">
+                    Heal
+                </button>
+                <button class="button" @click="giveUp">
+                    Give Up
+                </button>
+            </div>
+        </section>
+        <!-- Attack History -->
+        <section class="history">
+            <div class="history-item monster">Monster hits Player for 7</div>
+            <div class="history-item player">Player hits Monster for 6</div>
+        </section>
+    
+       
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                started: false,
+                player: {
+                    life: 100
+                },
+                monster: {
+                    life: 50
+                },
+                history: [
+                    
+                ]
+                
+
+            },
+            conputed: {
+
+            },
+            methods: {
+                start() {
+                    this.started = !this.started
+                },
+                giveUp() {
+                    if(confirm('Do you want to give up?')) {
+                        this.started = false
+                        this.player.life = 100
+                        this.monster.life = 100
+                    } 
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
