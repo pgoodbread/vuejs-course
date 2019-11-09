@@ -15,7 +15,6 @@
 
         .status {
             margin: auto;
-            background-color: grey;
         }
 
         .bar-outer {
@@ -34,14 +33,6 @@
             background-color: rgb(53, 165, 53);
             display:flex;
             justify-content: center;
-        }
-
-        .bar-player {
-            width: 100px;
-        }
-
-        .bar-monster {
-            width: 200px;
         }
 
         .number {
@@ -85,12 +76,12 @@
             text-align: center;
         }
 
-        .player{
+        .Player{
             background-color: rgba(255, 0, 0, 0.3);
             color: red;
         }
 
-        .monster  {
+        .Monster  {
             background-color: rgba(0, 0, 255, 0.3);
             color: blue;
         }
@@ -119,19 +110,19 @@
         <section class="life">
             <!-- Your -->
             <div class="status">
-                <h2>Test</h2>
+                <h2>You</h2>
                 <div class="bar-outer">
-                    <div class="bar-inner bar-player">
-                        <span class="number">{{ player.life }}</span>
+                    <div class="bar-inner" :style="playerHP">
+                        <span class="number">{{ playerLife }}</span>
                     </div>
                 </div>
             </div>
             <!-- Monster -->
             <div class="status">
-                <h2>Component</h2>
+                <h2>Monster</h2>
                 <div class="bar-outer">
-                    <div class="bar-inner bar-monster">
-                        <span class="number">{{ monster.life }}</span>
+                    <div class="bar-inner" :style="monsterHP">
+                        <span class="number">{{ monsterLife }}</span>
                     </div>
                 </div>
             </div>
@@ -144,13 +135,13 @@
                 </button>
             </div>
             <div class="game" v-else>
-                <button class="button red">
+                <button class="button red" @click="attack">
                     Attack
                 </button>
-                <button class="button orange">
+                <button class="button orange" @click="specialAttack">
                     Special Attack
                 </button>
-                <button class="button lightgreen">
+                <button class="button lightgreen" @click="heal">
                     Heal
                 </button>
                 <button class="button" @click="giveUp">
@@ -159,12 +150,12 @@
             </div>
         </section>
         <!-- Attack History -->
-        <section class="history">
-            <div class="history-item monster">Monster hits Player for 7</div>
-            <div class="history-item player">Player hits Monster for 6</div>
+        <section class="history" v-if="history.length > 0">
+            <div class="history-item" v-for="(item,key,index) in history" :class="item.char">
+                {{ item.char }} {{ item.type === 'attack' ? 'hits' : 'heals' }} {{ item.target }}
+                 for {{ item.points }}
+            </div>
         </section>
-    
-       
     </div>
 
     <script>
@@ -172,31 +163,84 @@
             el: '#app',
             data: {
                 started: false,
-                player: {
-                    life: 100
-                },
-                monster: {
-                    life: 50
-                },
+                playerLife: 100,
+                monsterLife: 100,
                 history: [
-                    
-                ]
-                
-
+                ],
             },
-            conputed: {
-
+            computed: {
+                monsterHP() {
+                    return 'width: ' + this.monsterLife * 4 + 'px'
+                },
+                playerHP() {
+                    return 'width: ' + this.playerLife * 4 + 'px'
+                },
             },
             methods: {
                 start() {
-                    this.started = !this.started
+                    this.started = true
+                    this.playerLife = 100
+                    this.monsterLife = 100
+                    this.history = []
+                },
+                attack() {
+                    const dmg = this.getRandomInt(5, 10)
+                    this.monsterLife -=  dmg
+                    this.monsterAttack()
+                    this.pushToHistory(this.getPlayerHistoryItem('attack', dmg))
+                },
+                specialAttack() {
+                    const dmg = this.getRandomInt(7, 14)
+                    this.monsterLife -= dmg
+                    this.monsterAttack()
+                    this.pushToHistory(this.getPlayerHistoryItem('attack', dmg))
+                },
+                heal() {
+                    const hp = this.getRandomInt(10, 10)
+                    this.monsterAttack()
+                    if(this.playerLife + hp > 100) {
+                        this.playerLife += 100 - this.playerLife
+                    } else {
+                    this.playerLife += hp
+                    }
+                    this.pushToHistory(this.getPlayerHistoryItem('heal', hp))
                 },
                 giveUp() {
                     if(confirm('Do you want to give up?')) {
-                        this.started = false
-                        this.player.life = 100
-                        this.monster.life = 100
+                        this.restart()
                     } 
+                },
+                monsterAttack() {
+                    const dmg = this.getRandomInt(5, 10)
+                    this.playerLife -= dmg
+                    this.pushToHistory({char: 'Monster', type: 'attack', points: dmg, target: 'Player'})
+                },
+                getRandomInt(min, max) {
+                    return Math.floor(Math.random() * (max - min + 1) + min)
+                },
+                getPlayerHistoryItem(type, pts) {
+                    const target = type === 'attack' ? 'Monster' : 'Player'
+                    return {char: 'Player', type: type, points: pts, target: target}
+                },
+                pushToHistory(obj) {
+                    this.history.unshift(obj)
+                }, 
+                reset() {
+                    this.start()
+                    this.started = false
+                }
+            },
+            watch: {
+                playerLife() {
+                    if (this.playerLife <= 0 || this.monsterLife <= 0) {
+                        const text = this.monsterLife <= 0 ? 'Won' : 'Lost'
+                        if(confirm('You '+text+'! Want to play again?'))
+                        {
+                            this.start()
+                        } else {
+                            this.reset()
+                        }
+                    }
                 }
             }
         })
