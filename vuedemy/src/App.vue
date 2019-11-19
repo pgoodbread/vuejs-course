@@ -7,7 +7,6 @@
         <hr>
         <Footer />
         </div>
-        
 </template>
 
 <script>

@@ -1,19 +1,19 @@
 <template>
   <li>
-    Server #{{ key }}
+    Server #{{ instanceNumber }}
   </li>
 </template>
 
 <script>
 export default {
   props: {
-    key: {
+    instanceNumber: {
       type: Number,
       default: () => 0
     }
   }, 
   data() {
-    return { key: 0 }
+    return { key }
   }
 
 }
