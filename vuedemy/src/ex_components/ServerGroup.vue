@@ -4,7 +4,6 @@
             <ServerInstance v-for="index in 5" :key="index" :instanceNumber="index" />
         </ul>
     </div>
-  </div>
 </template>
 
 <script>
