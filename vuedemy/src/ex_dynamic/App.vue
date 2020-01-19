@@ -3,13 +3,13 @@
         <div class="row">
             <div class="col-xs-12">
                 <br>
-                <button class="btn btn-primary">Load Blue Template</button>
-                <button class="btn btn-success">Load Green Template</button>
-                <button class="btn btn-danger">Load Red Template</button>
+                <button class="btn btn-primary" @click="selectedComponent = 'Blue'">Load Blue Template</button>
+                <button class="btn btn-success" @click="selectedComponent = 'Green'">Load Green Template</button>
+                <button class="btn btn-danger" @click="selectedComponent = 'Red'">Load Red Template</button>
                 <hr>
-                <app-blue></app-blue>
-                <app-green></app-green>
-                <app-red></app-red>
+                <component :is="selectedComponent">
+                    <h2>Hello World!</h2>
+                </component>
             </div>
         </div>
     </div>
@@ -22,9 +22,14 @@
 
     export default {
         components: {
-            appBlue: Blue,
-            appGreen: Green,
-            appRed: Red
+            Blue,
+            Green,
+            Red
+        },
+        data() {
+            return {
+                selectedComponent: '',
+            }
         }
     }
 </script>
