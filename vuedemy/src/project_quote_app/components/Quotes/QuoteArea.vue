@@ -1,13 +1,23 @@
 <template>
-  <h2>Quote Area</h2>
+  <div class="container">
+    <AddQuote />
+    <Quote />
+  </div>
 </template>
 
 <script>
-export default {
+import Quote from './Quote'
+import AddQuote from './AddQuote'
 
+export default {
+  components: {
+    Quote,
+    AddQuote
+  },
+  
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

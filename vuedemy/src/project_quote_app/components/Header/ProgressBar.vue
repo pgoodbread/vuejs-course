@@ -5,8 +5,7 @@
       <div class="progress-bar" :style="{width: quotes*100+'px'}">
         <span class="num-quotes">{{ quotes }} / 10</span>
       </div>
-      </div>
-      <button @click="quotes++">Increase Quotes</button>
+    </div>
   </div>
 </template>
 
