@@ -3,7 +3,7 @@
   <h4>Quote</h4>
   <textarea v-model="quoteText" rows="5" cols="122"></textarea>
   <div class="btn-container">
-    <button class="btn btn-primary button" >Add Quote</button>
+    <button class="btn btn-primary button" @click="addQuote">Add Quote</button>
   </div>
 </div>
   
@@ -11,12 +11,19 @@
 
 <script>
 export default {
-  props: {
-    quoteText: {
-      type: String, 
-      default: '',
+  data() {
+    return {
+      quoteText: '',
     }
   },
+  methods: {
+    addQuote() {
+      if(this.quoteText != ''){
+        this.$emit('addQuote', this.quoteText)
+        this.quoteText = ''
+      }
+    }
+  }
 }
 </script>
 
