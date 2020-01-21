@@ -1,5 +1,5 @@
 <template>
-  <h2>InfoBox</h2>
+  <h2>Quote Area</h2>
 </template>
 
 <script>
