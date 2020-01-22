@@ -2,7 +2,7 @@
   <div class="container">
     <AddQuote @addQuote="addQuote" />
     <div class="quotes">
-      <Quote v-for="(quote, index) in quotes" :key="index" :quote="quote" :id="index" @deleteQuote="deleteQuote" />
+      <Quote v-for="(quote, index) in quotes" :key="index" @click.native="deleteQuote(index)">{{ quote }}</Quote>
     </div>
   </div>
 </template>
@@ -22,14 +22,14 @@ export default {
     }
   },
   methods: {
-    addQuote(event) {
+    addQuote(quote) {
       if (this.quotes.length < 10){
-        this.quotes.push(event)
+        this.quotes.push(quote)
         this.$emit('quotes',this.quotes.length)
       }
     },
-    deleteQuote(event){
-      this.quotes.splice(event, 1)
+    deleteQuote(quote){
+      this.quotes.splice(quote, 1)
       this.$emit('quotes',this.quotes.length)
     }
   }

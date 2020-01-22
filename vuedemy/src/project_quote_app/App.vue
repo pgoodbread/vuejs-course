@@ -23,8 +23,8 @@ export default {
     }
   },
   methods: {
-    quoteCount(event) {
-      this.quotes = event
+    quoteCount(quotes) {
+      this.quotes = quotes
     }
   }
 }
