@@ -89,20 +89,21 @@
                             id="priority"
                             class="form-control"
                             v-model="selectedPriority">
-                        <option v-for="priority in priorities" :selected="priority == 'Medium'">{{ priority }}</option>
+                        <option v-for="(priority, index) in priorities" :key="index" :selected="priority == 'Medium'">{{ priority }}</option>
                     </select>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-                    <Switch></Switch>
+                    <app-switch v-model="dataSwitch"></app-switch>
                 </div>
             </div>
             <hr>
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <button
-                            class="btn btn-primary">Submit!
+                            class="btn btn-primary"
+                            @click.prevent="submitted">Submit!
                     </button>
                 </div>
             </div>
@@ -121,11 +122,12 @@
                         <p style="white-space: pre">Message: {{ message }}</p>
                         <p><strong>Send Mail?</strong></p>
                         <ul>
-                            <li v-for="item in sendMail">{{ item }}</li>
+                            <li v-for="(item, index) in sendMail" :key="index">{{ item }}</li>
                         </ul>
                         <p>Gender: {{ gender }}</p>
                         <p>Priority: {{ selectedPriority }}</p>
-                        <p>Switched:</p>
+                        <p>Switched: {{ dataSwitch }}</p>
+                        <p>Submitted: {{ isSubmitted }}</p>
                     </div>
                 </div>
             </div>
@@ -138,7 +140,7 @@ import Switch from './Switch.vue'
 
     export default {
         components: {
-            Switch,
+            appSwitch: Switch,
         },
         data() {
             return {
@@ -152,8 +154,15 @@ import Switch from './Switch.vue'
                 gender: 'Male',
                 selectedPriority: 'High',
                 priorities: ['High', 'Medium', 'Low'],
+                dataSwitch: true,
+                isSubmitted: false,
             }
-        }
+        },
+        methods: {
+            submitted() {
+                this.isSubmitted = true
+            },
+        },
     }
 </script>
 
