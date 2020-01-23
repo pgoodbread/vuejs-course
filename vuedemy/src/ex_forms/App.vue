@@ -87,9 +87,15 @@
                     <label for="priority">Priority</label>
                     <select
                             id="priority"
-                            class="form-control">
-                        <option></option>
+                            class="form-control"
+                            v-model="selectedPriority">
+                        <option v-for="priority in priorities" :selected="priority == 'Medium'">{{ priority }}</option>
                     </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                    <Switch></Switch>
                 </div>
             </div>
             <hr>
@@ -118,7 +124,7 @@
                             <li v-for="item in sendMail">{{ item }}</li>
                         </ul>
                         <p>Gender: {{ gender }}</p>
-                        <p>Priority:</p>
+                        <p>Priority: {{ selectedPriority }}</p>
                         <p>Switched:</p>
                     </div>
                 </div>
@@ -128,7 +134,12 @@
 </template>
 
 <script>
+import Switch from './Switch.vue'
+
     export default {
+        components: {
+            Switch,
+        },
         data() {
             return {
                 userData: {
@@ -138,7 +149,9 @@
                 },
                 message: '',
                 sendMail: [],
-                gender: 'Male'
+                gender: 'Male',
+                selectedPriority: 'High',
+                priorities: ['High', 'Medium', 'Low'],
             }
         }
     }
