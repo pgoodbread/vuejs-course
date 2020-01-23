@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './src/ex_forms/main.js',
+  entry: './src/ex_forms2/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
