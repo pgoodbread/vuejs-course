@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './src/ex_directives/main.js',
+  entry: './src/ex_mixins/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
