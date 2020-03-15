@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './src/ex_transitions/main.js',
+  entry: './src/project_calculator_app/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
