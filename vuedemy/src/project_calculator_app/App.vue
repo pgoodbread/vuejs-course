@@ -1,9 +1,9 @@
 <template>
-<div class="container mx-auto px-4">
-    <h1 class="text-orange-700">The Super Quiz</h1>
+<div class="container max-w-lg mx-auto px-4">
+    <h1 class="font-bold text-center text-3xl mx-auto py-3 leading-loose">The Super Quiz</h1>
+    <hr/>
     <div class="container">
-            <Question />
-            <Answer />
+        <component :is="side" :answer="answer"></component>
     </div>
 </div>
 
@@ -18,7 +18,17 @@ import Question from './components/Question'
             Answer,
             Question,
         },
-        data() {}
+        data() {
+            return {
+                side: 'Question'
+            }
+        },
+        methods: {
+            answer(el) {
+                console.log(el)
+                alert(el.text)
+            }
+        }
         }
 </script>
 

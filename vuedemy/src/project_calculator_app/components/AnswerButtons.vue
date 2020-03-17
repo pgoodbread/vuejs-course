@@ -1,5 +1,6 @@
 <template>
-  <div class="flex flex-row justify-around h-50 w-500">
+<div class="container max-w-lg mx-auto py-5">
+  <div class="flex flex-row justify-around">
     <button 
       class="bg-blue-500 hover:bg-blue-700 font-bold text-white py-2 px-4 rounded"
       v-for="(value,index) in answers" 
@@ -8,6 +9,7 @@
       {{ value }}
     </button>
   </div>
+</div>
 </template>
 
 <script>
